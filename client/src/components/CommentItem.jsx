@@ -5,15 +5,12 @@ import { AiTwotoneEdit, AiFillDelete } from 'react-icons/ai'
 export const CommentItem = ({ cmt, onEdit, onDelete }) => {
     const { user } = useSelector(state => state.auth)
 
-    // Проверка: залогинен ли пользователь
     const isAuth = !!user
 
-    // Проверка: это наш комментарий (работает и со строкой и с объектом)
     const isOwner =
         user &&
         (cmt.author?._id === user._id || cmt.author === user._id)
 
-    // Аватар (первые 2 буквы username)
     const avatar = cmt.author?.username
         ? cmt.author.username.slice(0, 2).toUpperCase()
         : '??'
@@ -30,18 +27,15 @@ export const CommentItem = ({ cmt, onEdit, onDelete }) => {
                 </div>
             </div>
 
-            {/* показываем кнопки ТОЛЬКО если пользователь залогинен */}
             {isAuth && (
                 <div className='flex justify-end gap-3 text-white opacity-50 text-sm'>
                     
-                    {/* редактировать можно только свой */}
                     {isOwner && (
                         <button onClick={() => onEdit(cmt)}>
                             <AiTwotoneEdit />
                         </button>
                     )}
 
-                    {/* удалять можно только свой */}
                     {isOwner && (
                         <button onClick={() => onDelete(cmt._id)}>
                             <AiFillDelete />
