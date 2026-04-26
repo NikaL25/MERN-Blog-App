@@ -1,0 +1,19 @@
+/* ./src/index.css */
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@layer base {
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: #0f2027;
+    background: -webkit-linear-gradient(to right, #2c5364, #203a43, #0f2027);
+    background: linear-gradient(to right, #2c5364, #203a43, #0f2027);
+    min-height: 100vh;
+    color: #f0f0f0;
+  }
+
+  a {
+    @apply transition-colors duration-300 hover:text-yellow-400;
+  }
+}
