@@ -25,7 +25,7 @@ if (!post || !post._id) {
         {post.imgUrl && (
         <img
           src={`https://mern-blog-app-0lw2.onrender.com/${post.imgUrl}`}
-          alt="img"
+          alt="img-1"
           className="object-cover w-full h-64 sm:h-80 rounded-lg mb-4"
         />
       )}
