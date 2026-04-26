@@ -22,8 +22,6 @@ import {
 import { CommentItem } from '../components/CommentItem'
 import { updateComment, deleteComment } from '../redux/features/comment/commentSlice'
 
-const API_URL = "https://mern-blog-app-0lw2.onrender.com"
-
 export const PostPage = () => {
     const [post, setPost] = useState(null)
     const [comment, setComment] = useState('')
