@@ -9,6 +9,7 @@ import postRoute from './routes/posts.js'
 import commentRoute from './routes/comments.js'
 
 dotenv.config()
+
 const app = express()
 
 // Constants
@@ -23,25 +24,33 @@ app.use(fileUpload())
 app.use(express.json())
 app.use(express.static('uploads'))
 
-// Routes
-// http://localhost:3002
+// Health check route (for browser / Render)
 app.get('/', (req, res) => {
     res.send('🚀 API is running')
 })
+
+// Routes
 app.use('/api/auth', authRoute)
 app.use('/api/posts', postRoute)
 app.use('/api/comments', commentRoute)
 
+// Start server
 async function start() {
     try {
+        // MongoDB connection (FIXED)
         await mongoose.connect(
-            `mongodb+srv://nikalomiashvili25_db_user:${DB_PASSWORD}@cluster0.vzc841m.mongodb.net/`
-            // `mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.pbuqiqy.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`,
+            `mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.vzc841m.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`
         )
-        console.log('✅ DB connected');
-        app.listen(PORT, () => console.log(`Server started on port: ${PORT}`))
+
+        console.log('✅ DB connected')
+
+        app.listen(PORT, () => {
+            console.log(`🚀 Server started on port: ${PORT}`)
+        })
+
     } catch (error) {
-        console.log(error)
+        console.log('❌ DB connection error:', error)
     }
 }
+
 start()
