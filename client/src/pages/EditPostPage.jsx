@@ -80,7 +80,7 @@ export const EditPostPage = () => {
             </div>
 
             <label className='text-xs text-white opacity-70'>
-                Заголовок поста:
+                Post Title:
                 <input
                     type='text'
                     value={title}
@@ -91,11 +91,11 @@ export const EditPostPage = () => {
             </label>
 
             <label className='text-xs text-white opacity-70'>
-                Текст поста:
+                Post Description:
                 <textarea
                     onChange={(e) => setText(e.target.value)}
                     value={text}
-                    placeholder='Текст поста'
+                    placeholder='Post Description'
                     className='mt-1 text-black w-full rounded-lg bg-gray-400 border py-1 px-2 text-xs outline-none resize-none h-40 placeholder:text-gray-700'
                 />
             </label>
@@ -105,14 +105,14 @@ export const EditPostPage = () => {
                     onClick={submitHandler}
                     className='flex justify-center items-center bg-gray-600 text-xs text-white rounded-sm py-2 px-4'
                 >
-                    Обновить
+                    Update
                 </button>
 
                 <button
                     onClick={clearFormHandler}
                     className='flex justify-center items-center bg-red-500 text-xs text-white rounded-sm py-2 px-4'
                 >
-                    Отменить
+                    Cancel
                 </button>
             </div>
         </form>
