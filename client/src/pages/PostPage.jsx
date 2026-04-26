@@ -31,7 +31,6 @@ export const PostPage = () => {
     const navigate = useNavigate()
     const params = useParams()
     const dispatch = useDispatch()
-    const API_URL = "https://mern-blog-app-0lw2.onrender.com"
 
 
     const handleEdit = (cmt) => {
@@ -46,7 +45,7 @@ const handleDelete = (id) => {
     const removePostHandler = () => {
         try {
             dispatch(removePost(params.id))
-            toast('Пост был удален')
+            toast('Post has been deleted')
             navigate('/posts')
         } catch (error) {
             console.log(error)
@@ -118,7 +117,7 @@ const handleSubmit = () => {
       {/* src={`http://localhost:3002/${post.imgUrl}`} */}
     {post?.imgUrl && (
         <img
-        src={`${API_URL}/${post.imgUrl}`}
+        src={`https://mern-blog-app-0lw2.onrender.com/${post.imgUrl}`}
         alt="img"
         className="object-cover w-full h-full rounded-sm"
         />

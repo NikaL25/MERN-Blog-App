@@ -32,7 +32,6 @@ export const MainPage = () => {
       ))}
     </div>
 
-    {/* Популярное */}
     <div className=' min-w-[180px]'>
       <div className='text-xs uppercase text-white mb-4'>popular Posts:</div>
       {popularPosts?.map((post, idx) => (
