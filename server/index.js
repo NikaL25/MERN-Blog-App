@@ -8,8 +8,8 @@ import authRoute from './routes/auth.js'
 import postRoute from './routes/posts.js'
 import commentRoute from './routes/comments.js'
 
-const app = express()
 dotenv.config()
+const app = express()
 
 // Constants
 const PORT = process.env.PORT || 3001
