@@ -6,13 +6,13 @@ export const createComment = async (req, res) => {
         const { postId, comment } = req.body
 
         if (!comment)
-            return res.json({ message: 'Комментарий не может быть пустым' })
+            return res.json({ message: 'Comment cannot be empty' })
 
-        // Сохраняем новый комментарий с автором и привязкой к посту
+        
         const newComment = new Comment({ comment, author: req.userId, post: postId })
         await newComment.save()
 
-        // Обновляем пост, добавляя комментарий
+       
         try {
             await Post.findByIdAndUpdate(postId, {
                 $push: { comments: newComment._id },
@@ -21,14 +21,14 @@ export const createComment = async (req, res) => {
             console.log(error)
         }
 
-        // Получаем полный объект комментария с username автора
+       
         const populatedComment = await Comment.findById(newComment._id)
             .populate('author', 'username')
 
         res.json(populatedComment)
     } catch (error) {
         console.log(error)
-        res.json({ message: 'Что-то пошло не так.' })
+        res.json({ message: 'Something went wrong.' })
     }
 }
 
@@ -36,12 +36,11 @@ export const createComment = async (req, res) => {
 export const getPostComments = async (req, res) => {
     try {
         const postId = req.params.id
-        // Получаем все комментарии для поста и добавляем username автора
         const comments = await Comment.find({ post: postId }).populate('author', 'username')
         res.json(comments)
     } catch (error) {
         console.log(error)
-        res.json({ message: 'Ошибка получения комментариев' })
+        res.json({ message: 'Error receiving comments' })
     }
 }
 // Update Comment
@@ -53,7 +52,7 @@ export const updateComment = async (req, res) => {
         const currentComment = await Comment.findById(id)
 
         if (currentComment.author.toString() !== req.userId) {
-            return res.json({ message: "Нет доступа" })
+            return res.json({ message: "No access" })
         }
 
         const updatedComment = await Comment.findByIdAndUpdate(
@@ -65,7 +64,7 @@ export const updateComment = async (req, res) => {
         res.json(updatedComment)
     } catch (error) {
         console.log(error)
-        res.json({ message: "Ошибка обновления комментария" })
+        res.json({ message: "Error updating comment" })
     }
 }
 
@@ -76,9 +75,9 @@ export const deleteComment = async (req, res) => {
 
         const currentComment = await Comment.findById(id)
 
-        // ❗ проверка владельца
         if (currentComment.author.toString() !== req.userId) {
-            return res.json({ message: "Нет доступа" })
+            return res.json({ message: "No access
+" })
         }
 
         const deletedComment = await Comment.findByIdAndDelete(id)
@@ -91,6 +90,6 @@ export const deleteComment = async (req, res) => {
         res.json(deletedComment)
     } catch (error) {
         console.log(error)
-        res.json({ message: "Ошибка удаления комментария" })
+        res.json({ message: "Error deleting comment" })
     }
 }
