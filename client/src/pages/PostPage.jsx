@@ -21,6 +21,9 @@ import {
 } from '../redux/features/comment/commentSlice'
 import { CommentItem } from '../components/CommentItem'
 import { updateComment, deleteComment } from '../redux/features/comment/commentSlice'
+
+const API_URL = "https://mern-blog-app-0lw2.onrender.com"
+
 export const PostPage = () => {
     const [post, setPost] = useState(null)
     const [comment, setComment] = useState('')
@@ -113,12 +116,12 @@ const handleSubmit = () => {
     }
   >
     {post?.imgUrl && (
-      <img
-        {/* src={`http://localhost:3002/${post.imgUrl}`} */}
-        src={`${API_URL}/${post.imgUrl}`}
-        alt='img'
-        className='object-cover w-full h-full rounded-sm' 
-      />
+  {/* src={`http://localhost:3002/${post.imgUrl}`} */}
+<img
+  src={`${API_URL}/${post.imgUrl}`}
+  alt="img"
+  className="object-cover w-full h-full rounded-sm"
+/>
     )}
   </div>
 </div>
