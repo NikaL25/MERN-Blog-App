@@ -31,6 +31,8 @@ export const PostPage = () => {
     const navigate = useNavigate()
     const params = useParams()
     const dispatch = useDispatch()
+    const API_URL = "https://mern-blog-app-0lw2.onrender.com"
+
 
     const handleEdit = (cmt) => {
     setComment(cmt.comment)
@@ -113,14 +115,14 @@ const handleSubmit = () => {
         : 'flex rounded-sm'
     }
   >
+      {/* src={`http://localhost:3002/${post.imgUrl}`} */}
     {post?.imgUrl && (
-  {/* src={`http://localhost:3002/${post.imgUrl}`} */}
-<img
-  src={`${API_URL}/${post.imgUrl}`}
-  alt="img"
-  className="object-cover w-full h-full rounded-sm"
-/>
-    )}
+        <img
+        src={`${API_URL}/${post.imgUrl}`}
+        alt="img"
+        className="object-cover w-full h-full rounded-sm"
+        />
+            )}
   </div>
 </div>
 

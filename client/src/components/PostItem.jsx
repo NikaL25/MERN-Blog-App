@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import dayjs from 'dayjs'
 
 export const PostItem = ({ post }) => {
-
+ const API_URL = "https://mern-blog-app-0lw2.onrender.com"
 if (!post || !post._id) {
   return (
     <div className="text-xl text-center text-white py-10">
@@ -24,7 +24,7 @@ if (!post || !post._id) {
 
         {post.imgUrl && (
         <img
-          src={`https://mern-blog-app-0lw2.onrender.com/${post.imgUrl}`}
+          src={`${API_URL}/${post.imgUrl}`}
           alt="img-1"
           className="object-cover w-full h-64 sm:h-80 rounded-lg mb-4"
         />
