@@ -25,6 +25,9 @@ app.use(express.static('uploads'))
 
 // Routes
 // http://localhost:3002
+app.get('/', (req, res) => {
+    res.send('🚀 API is running')
+})
 app.use('/api/auth', authRoute)
 app.use('/api/posts', postRoute)
 app.use('/api/comments', commentRoute)
