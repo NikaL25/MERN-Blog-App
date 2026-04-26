@@ -20,13 +20,15 @@ if (!post || !post._id) {
     >
       <div className="flex flex-col w-full max-w-full bg-gradient-to-br from-gray-600 via-gray-700  p-5 rounded-xl shadow-lg hover:shadow-2xl overflow-hidden">
         
+ 
+
         {post.imgUrl && (
-          <img
-            src={`http://localhost:3002/${post.imgUrl}`}
-            alt="img"
-            className="object-cover w-full h-64 sm:h-80 rounded-lg mb-4"
-          />
-        )}
+        <img
+          src={`https://mern-blog-app-0lw2.onrender.com/${post.imgUrl}`}
+          alt="img"
+          className="object-cover w-full h-64 sm:h-80 rounded-lg mb-4"
+        />
+      )}
 
         <div className="flex justify-between items-center text-xs text-gray-400 mb-2">
           <span>{post.username}</span>
