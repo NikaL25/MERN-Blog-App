@@ -75,10 +75,9 @@ export const deleteComment = async (req, res) => {
 
         const currentComment = await Comment.findById(id)
 
-        if (currentComment.author.toString() !== req.userId) {
-            return res.json({ message: "No access
-" })
-        }
+       if (currentComment.author.toString() !== req.userId) {
+    return res.json({ message: "No access" })
+}
 
         const deletedComment = await Comment.findByIdAndDelete(id)
 
