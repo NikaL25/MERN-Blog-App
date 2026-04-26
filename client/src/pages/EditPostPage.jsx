@@ -67,7 +67,7 @@ export const EditPostPage = () => {
             <div className='flex object-cover py-2'>
           {oldImage && (
     <img
-        src={`http://localhost:3002/${oldImage}?t=${Date.now()}`}
+        src={`https://mern-blog-app-0lw2.onrender.com/${oldImage}?t=${Date.now()}`}
         alt="old"
     />
 )}
@@ -85,7 +85,7 @@ export const EditPostPage = () => {
                     type='text'
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
-                    placeholder='Заголовок'
+                    placeholder='Title'
                     className='mt-1 text-black w-full rounded-lg bg-gray-400 border py-1 px-2 text-xs outline-none placeholder:text-gray-700'
                 />
             </label>
