@@ -1,67 +1,84 @@
-📝 MERN Blog App
 
-A full-stack blogging platform built with the MERN stack, allowing users to create, manage, and explore blog posts with images and comments.
+# 📝 MERN Blog App
 
-🌐 Live Demo
-View Live [Demo](https://mern-blog-app-tau-weld.vercel.app/)
+A full-stack blogging platform built with the MERN stack. Users can create accounts, publish posts with images, explore articles, and interact through comments.
 
-Deployed on Vercel.
+## 🌐 Live Demo
 
-✨ Features
-🔐 User registration and authentication
-📰 Create, edit, and delete posts
-🖼️ Upload images using Cloudinary
-🔥 Browse popular and recent posts
-💬 Add, edit, and delete comments
-👤 View personal posts
-📱 Responsive user interface
-🛠️ Tech Stack
-Frontend Backend Services
-React 19 Node.js MongoDB Atlas
-Redux Toolkit Express 5 Cloudinary
-React Router Mongoose Vercel
-Axios JWT Render
-Tailwind CSS bcryptjs
-📁 Project Structure
-text
+[**View Live Demo**](https://mern-blog-app-tau-weld.vercel.app/)
+
+## ✨ Features
+
+- User registration and authentication
+- Create, edit, and delete blog posts
+- Upload images using Cloudinary
+- Browse recent and popular posts
+- View individual posts and reading statistics
+- Add, edit, and delete comments
+- View personal posts
+- Responsive design
+
+## 🛠️ Tech Stack
+
+| Frontend | Backend | Database & Services |
+|---|---|---|
+| React 19 | Node.js | MongoDB Atlas |
+| Redux Toolkit | Express 5 | Mongoose |
+| React Router | JWT | Cloudinary |
+| Axios | bcryptjs | Vercel |
+| Tailwind CSS | | Render |
+
+## 📁 Project Structure
+
+```text
 MERN-Blog-App/
-├── client/ # React frontend
-│ ├── public/
-│ └── src/
-│ ├── components/
-│ ├── pages/
-│ ├── redux/
-│ └── utils/
+├── client/
+│   ├── public/
+│   └── src/
+│       ├── components/
+│       ├── pages/
+│       ├── redux/
+│       ├── utils/
+│       ├── App.js
+│       └── index.js
 │
-├── server/ # Express backend
-│ ├── config/
-│ ├── controllers/
-│ ├── models/
-│ ├── routes/
-│ ├── utils/
-│ └── index.js
+├── server/
+│   ├── config/
+│   ├── controllers/
+│   ├── models/
+│   ├── routes/
+│   ├── utils/
+│   └── index.js
 │
 └── README.md
-
-⚙️ Installation & Setup
-
-1. Clone the repository
-
-bash
 ```
+
+## ⚙️ Installation
+
+### Prerequisites
+
+- Node.js
+- npm
+- MongoDB Atlas account
+- Cloudinary account
+
+### 1. Clone the repository
+
+```bash
 git clone https://github.com/NikaL25/MERN-Blog-App.git
 cd MERN-Blog-App
-``` 
+```
 
-2. Set up the backend
+### 2. Backend Setup
 
-bash
+```bash
 cd server
 npm install
+```
 
-Create a .env file in the server directory:
+Create a `.env` file in the `server` directory:
 
-env
+```env
 PORT=3001
 JWT_SECRET=your_jwt_secret
 
@@ -72,35 +89,48 @@ DB_NAME=your_database_name
 CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
+```
 
 Start the backend:
 
-bash
+```bash
 npm run dev
+```
 
-3. Set up the frontend
+### 3. Frontend Setup
 
 Open a new terminal:
 
-bash
+```bash
 cd client
 npm install
+```
 
-Create a .env file in the client directory (optional):
+Create a `.env` file in the `client` directory (optional):
 
-env
+```env
 REACT_APP_API_URL=http://localhost:3001/api
+```
 
 Start the frontend:
 
-bash
+```bash
 npm start
+```
 
-🚀 Deployment
-Frontend: Vercel
-Backend: Render
-Database: MongoDB Atlas
-Image Storage: Cloudinary
-📄 License
+The application will be available at:
 
-This project is open-source and available for personal and educational use.
+http://localhost:3000
+
+## 🚀 Deployment
+
+| Service | Platform |
+|---|---|
+| Frontend | Vercel |
+| Backend | Render |
+| Database | MongoDB Atlas |
+| Image Storage | Cloudinary |
+
+## 📄 License
+
+This project is available for personal and educational use.
