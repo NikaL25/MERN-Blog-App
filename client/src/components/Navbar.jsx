@@ -7,8 +7,6 @@ export const Navbar = () => {
   const isAuth = useSelector(checkIsAuth)
   const dispatch = useDispatch()
 
-  const activeStyle = "text-white font-semibold"
-
   const logoutHandler = () => {
     dispatch(logout())
     window.localStorage.removeItem("token")
@@ -16,23 +14,24 @@ export const Navbar = () => {
   }
 
   return (
-    <nav className="w-full py-4 px-6 bg-transparent flex items-center justify-between sticky top-0 z-50">
+    <nav className="site-nav">
       {/* Logo */}
       <Link
         to="/"
-        className="text-2xl font-bold text-white bg-gray-700 px-3 py-2 rounded-lg hover:bg-gray-600 transition-colors"
+        className="brand"
       >
-        Blog
+        <span className="brand-mark">B</span>
+        <span>Inkline</span>
       </Link>
 
       {/* Menu */}
       {isAuth && (
-        <ul className="hidden md:flex gap-8">
+        <ul className="nav-links">
           <li>
             <NavLink
               to="/"
               className={({ isActive }) =>
-                `text-gray-400 hover:text-white transition-colors ${isActive ? activeStyle : ""}`
+                `nav-link ${isActive ? "active" : ""}`
               }
             >
               Main
@@ -42,7 +41,7 @@ export const Navbar = () => {
             <NavLink
               to="/posts"
               className={({ isActive }) =>
-                `text-gray-400 hover:text-white transition-colors ${isActive ? activeStyle : ""}`
+                `nav-link ${isActive ? "active" : ""}`
               }
             >
               My Posts
@@ -52,7 +51,7 @@ export const Navbar = () => {
             <NavLink
               to="/new"
               className={({ isActive }) =>
-                `text-gray-400 hover:text-white transition-colors ${isActive ? activeStyle : ""}`
+                `nav-link ${isActive ? "active" : ""}`
               }
             >
               Add Post
@@ -66,14 +65,14 @@ export const Navbar = () => {
         {isAuth ? (
           <button
             onClick={logoutHandler}
-            className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-4 py-2 rounded-lg hover:opacity-90 transition-opacity"
+            className="button-secondary"
           >
             Logout
           </button>
         ) : (
           <Link
             to="/login"
-            className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-4 py-2 rounded-lg hover:opacity-90 transition-opacity"
+            className="button-primary"
           >
             Login
           </Link>

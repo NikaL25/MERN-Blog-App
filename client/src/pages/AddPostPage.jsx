@@ -31,71 +31,40 @@ export const AddPostPage = () => {
   }
 
   return (
-    <div className="min-h-screen py-20 px-4">
-      <form
-        onSubmit={e => e.preventDefault()}
-        className="w-full max-w-lg bg-gray-900 p-8 rounded-xl shadow-lg flex flex-col gap-6 mx-auto"
-      >
-        {/* Image Upload */}
-        <label className="flex flex-col items-center justify-center border-2 border-dashed border-gray-600 rounded-lg py-4 cursor-pointer text-gray-300 hover:border-indigo-500 transition-colors">
-          Add Image
-          <input
-            type="file"
-            className="hidden"
-            onChange={e => setImage(e.target.files[0])}
-          />
-        </label>
+    <main className="form-page">
+      <form onSubmit={e => e.preventDefault()} className="form-card">
+        <header className="form-header">
+          <p className="eyebrow">New publication</p>
+          <h1 className="form-title">Share an idea.</h1>
+          <p className="form-copy">Give your readers something thoughtful to take with them.</p>
+        </header>
 
-        {image && (
-          <div className="w-full h-64 flex justify-center items-center overflow-hidden rounded-lg">
-            <img
-              src={URL.createObjectURL(image)}
-              alt={image.name}
-              className="object-cover w-full h-full"
-            />
+        <div className="form-stack">
+          <label className="upload-zone">
+            <span>{image ? 'Change cover image' : 'Choose a cover image'}</span>
+            <input type="file" className="hidden" onChange={e => setImage(e.target.files[0])} />
+          </label>
+
+          {image && (
+            <img src={URL.createObjectURL(image)} alt={image.name} className="upload-preview" />
+          )}
+
+          <label className="field">
+            Story title
+            <input type="text" value={title} onChange={e => setTitle(e.target.value)} placeholder="A title people will remember" />
+          </label>
+
+          <label className="field">
+            Story body
+            <textarea value={text} onChange={e => setText(e.target.value)} placeholder="Start writing..." />
+          </label>
+
+          <div className="form-actions">
+            <button type="button" onClick={clearFormHandler} className="button-secondary">Clear</button>
+            <button type="button" onClick={submitHandler} className="button-primary">Publish story</button>
           </div>
-        )}
-
-        {/* Title */}
-        <label className="flex flex-col text-gray-300 text-sm">
-          Post Title
-          <input
-            type="text"
-            value={title}
-            onChange={e => setTitle(e.target.value)}
-            placeholder="Title"
-            className="mt-1 px-3 py-2 rounded-lg bg-gray-800 text-white border border-gray-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition-all placeholder-gray-400"
-          />
-        </label>
-
-        {/* Text */}
-        <label className="flex flex-col text-gray-300 text-sm">
-          Post Text
-          <textarea
-            value={text}
-            onChange={e => setText(e.target.value)}
-            placeholder="Post text"
-            className="mt-1 px-3 py-2 rounded-lg bg-gray-800 text-white border border-gray-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition-all resize-none h-40 placeholder-gray-400"
-          />
-        </label>
-
-        {/* Buttons */}
-        <div className="flex gap-4 justify-center mt-2">
-          <button
-            onClick={submitHandler}
-            className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-6 py-2 rounded-lg hover:opacity-90 transition-opacity"
-          >
-            Add Post
-          </button>
-
-          <button
-            onClick={clearFormHandler}
-            className="bg-red-500 text-white px-6 py-2 rounded-lg hover:opacity-90 transition-opacity"
-          >
-            Cancel
-          </button>
         </div>
       </form>
-    </div>
+    </main>
   )
 }

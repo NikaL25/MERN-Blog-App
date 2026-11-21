@@ -3,7 +3,6 @@ import { useEffect, useState, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import { updatePost } from '../redux/features/post/postSlice'
-
 import axios from '../utils/axios'
 import { getImageUrl } from '../utils/imageUrl'
 
@@ -30,9 +29,7 @@ export const EditPostPage = () => {
             updatedPost.append('title', title)
             updatedPost.append('text', text)
             updatedPost.append('id', params.id)
-            if (newImage) {
-                updatedPost.append('image', newImage)
-            }
+            if (newImage) updatedPost.append('image', newImage)
             await dispatch(updatePost(updatedPost))
             navigate('/posts')
         } catch (error) {
@@ -45,77 +42,43 @@ export const EditPostPage = () => {
         setText('')
     }
 
-    useEffect(() => {
-        fetchPost()
-    }, [fetchPost])
+    useEffect(() => { fetchPost() }, [fetchPost])
 
     return (
-        <form
-            className='w-1/3 mx-auto py-10'
-            onSubmit={(e) => e.preventDefault()}
-        >
-            <label className='text-gray-300 py-2 bg-gray-600 text-xs mt-2 flex items-center justify-center border-2 border-dotted cursor-pointer'>
-                Image:
-                <input
-                    type='file'
-                    className='hidden'
-                    onChange={(e) => {
-                        setNewImage(e.target.files[0])
-                        setOldImage('')
-                    }}
-                />
-            </label>
-            <div className='flex object-cover py-2'>
-          {oldImage && (
-    <img
-        src={`${getImageUrl(oldImage)}?t=${Date.now()}`}
-        alt="old"
-    />
-)}
-                      {newImage && (
-                    <img
-                        src={URL.createObjectURL(newImage)}
-                        alt={newImage.name}
-                    />
-                )}
-            </div>
+        <main className="form-page">
+            <form className="form-card" onSubmit={(e) => e.preventDefault()}>
+                <header className="form-header">
+                    <p className="eyebrow">Edit publication</p>
+                    <h1 className="form-title">Refine your story.</h1>
+                    <p className="form-copy">Make a thoughtful update. Your existing story stays safe until you save.</p>
+                </header>
 
-            <label className='text-xs text-white opacity-70'>
-                Post Title:
-                <input
-                    type='text'
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    placeholder='Title'
-                    className='mt-1 text-black w-full rounded-lg bg-gray-400 border py-1 px-2 text-xs outline-none placeholder:text-gray-700'
-                />
-            </label>
+                <div className="form-stack">
+                    <label className="upload-zone">
+                        <span>{newImage ? 'Change cover image' : 'Replace cover image'}</span>
+                        <input type="file" className="hidden" onChange={(e) => { setNewImage(e.target.files[0]); setOldImage('') }} />
+                    </label>
+                    <div className="form-image-row">
+                        {oldImage && <img src={`${getImageUrl(oldImage)}?t=${Date.now()}`} alt="Current cover" />}
+                        {newImage && <img src={URL.createObjectURL(newImage)} alt={newImage.name} />}
+                    </div>
 
-            <label className='text-xs text-white opacity-70'>
-                Post Description:
-                <textarea
-                    onChange={(e) => setText(e.target.value)}
-                    value={text}
-                    placeholder='Post Description'
-                    className='mt-1 text-black w-full rounded-lg bg-gray-400 border py-1 px-2 text-xs outline-none resize-none h-40 placeholder:text-gray-700'
-                />
-            </label>
+                    <label className="field">
+                        Story title
+                        <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Story title" />
+                    </label>
 
-            <div className='flex gap-8 items-center justify-center mt-4'>
-                <button
-                    onClick={submitHandler}
-                    className='flex justify-center items-center bg-gray-600 text-xs text-white rounded-sm py-2 px-4'
-                >
-                    Update
-                </button>
+                    <label className="field">
+                        Story body
+                        <textarea onChange={(e) => setText(e.target.value)} value={text} placeholder="Story body" />
+                    </label>
 
-                <button
-                    onClick={clearFormHandler}
-                    className='flex justify-center items-center bg-red-500 text-xs text-white rounded-sm py-2 px-4'
-                >
-                    Cancel
-                </button>
-            </div>
-        </form>
+                    <div className="form-actions">
+                        <button type="button" onClick={clearFormHandler} className="button-secondary">Clear</button>
+                        <button type="button" onClick={submitHandler} className="button-primary">Save changes</button>
+                    </div>
+                </div>
+            </form>
+        </main>
     )
 }

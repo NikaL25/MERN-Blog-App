@@ -4,12 +4,9 @@ import PopularPosts from '../components/PopularPosts'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllPosts } from '../redux/features/post/postSlice'
 
-
 export const MainPage = () => {
     const dispatch = useDispatch()
     const { posts, popularPosts } = useSelector((state) => state.post)
-
-    console.log(popularPosts)
 
     useEffect(() => {
         dispatch(getAllPosts())
@@ -17,28 +14,36 @@ export const MainPage = () => {
 
     if (!posts.length) {
         return (
-            <div className='text-xl text-center text-white py-10'>
-                There are no posts.
+            <div className='empty-state'>
+                <h2>No stories yet</h2>
+                <p>Be the first to share something worth reading.</p>
             </div>
         )
     }
 
     return (
-      <div className='max-w-[900px] mx-auto py-10'>
-<div className='flex gap-8'>
-  <div className='flex flex-col gap-10 w-full max-w-[680px]'>
-      {posts?.map((post, idx) => (
-        <PostItem key={idx} post={post} />
-      ))}
-    </div>
+        <main className='page-container'>
+            <section className='page-hero'>
+                <p className='eyebrow'>A quiet place for good ideas</p>
+                <h1 className='page-title'>Stories with a point of view.</h1>
+                <p className='page-lede'>Thoughtful writing from curious people. Read something new, then add your own perspective.</p>
+            </section>
+            <div className='feed-layout'>
+                <div className='post-feed'>
+                    {posts?.map((post, idx) => (
+                        <PostItem key={idx} post={post} />
+                    ))}
+                </div>
 
-    <div className=' min-w-[180px]'>
-      <div className='text-xs uppercase text-white mb-4'>popular Posts:</div>
-      {popularPosts?.map((post, idx) => (
-        <PopularPosts key={idx} post={post} />
-      ))}
-    </div>
-  </div>
-</div>
+                <aside className='sidebar'>
+                    <h2 className='sidebar-title'>Popular this week</h2>
+                    <div className='popular-list'>
+                        {popularPosts?.map((post, idx) => (
+                            <PopularPosts key={idx} post={post} />
+                        ))}
+                    </div>
+                </aside>
+            </div>
+        </main>
     )
 }

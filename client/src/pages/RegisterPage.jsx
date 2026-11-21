@@ -8,8 +8,7 @@ export const RegisterPage = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const { status } = useSelector((state) => state.auth)
-    const isAuth = useSelector(checkIsAuth) 
-
+    const isAuth = useSelector(checkIsAuth)
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
@@ -18,58 +17,35 @@ export const RegisterPage = () => {
         if (isAuth) navigate('/')
      }, [status, isAuth, navigate, dispatch])
 
-
     const handleSubmit = () => {
         try {
             dispatch(registerUser({username, password}))
             setPassword('')
             setUsername('')
-        } catch (error) {
-            console.log(error)
-        }
+        } catch (error) { console.log(error) }
     }
 
-
-  return (
-  <form onSubmit={e => e.preventDefault()}
-        className='w-1/4 h-60 mx-auto mt-40'
-    >
-        <h1 className='text-lg text-white text-center'>Registration</h1>
-        <label className='text-md text-gray-400'>
-            Username:
-            <input
-                type='text' 
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder='Username'
-                className='mt-1 text-black w-full rounded-lg bg-gray-400 border py-1 px-2 text-md outline-none placeholder:text-gray-700'
-            />
-        </label>
-
-          <label className='text-md text-gray-400 '>
-            Password:
-            <input
-                type='password'
-                value={password} 
-                placeholder='Password'
-                onChange={(e) => setPassword(e.target.value)}
-                className='mt-1 text-black w-full rounded-lg bg-gray-400 border py-1 px-2 text-md outline-none placeholder:text-gray-700'
-            />
-        </label>
-
-        <div className="flex gap-8 justify-center mt-4">
-            <button 
-                type='submit'
-                onClick={handleSubmit}
-                className='flex justify-center items-center text-xs bg-gray-600 text-white rounded-sm py-2 px-4'
-            >
-                Register       
-            </button>
-            <Link to='/login'
-                className='flex justify-center items-center text-xs text-white '
-            >
-                Already have an account?
-            </Link>
-        </div>
-</form>   )
+    return (
+        <main className="form-page">
+            <form onSubmit={e => e.preventDefault()} className="form-card narrow">
+                <header className="form-header">
+                    <p className="eyebrow">Join the community</p>
+                    <h1 className="form-title">Make room for your voice.</h1>
+                    <p className="form-copy">Create an account and start publishing ideas that matter to you.</p>
+                </header>
+                <div className="form-stack">
+                    <label className="field">Username
+                        <input type='text' value={username} onChange={(e) => setUsername(e.target.value)} placeholder='Choose a username' />
+                    </label>
+                    <label className="field">Password
+                        <input type='password' value={password} placeholder='Create a password' onChange={(e) => setPassword(e.target.value)} />
+                    </label>
+                    <div className="form-actions">
+                        <Link to='/login' className="form-link">Already a member?</Link>
+                        <button type='submit' onClick={handleSubmit} className='button-primary'>Create account</button>
+                    </div>
+                </div>
+            </form>
+        </main>
+    )
 }

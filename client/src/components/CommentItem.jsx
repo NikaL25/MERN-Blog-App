@@ -16,19 +16,21 @@ export const CommentItem = ({ cmt, onEdit, onDelete }) => {
         : '??'
 
     return (
-        <div className='flex flex-col gap-1 border-b border-gray-600 pb-2'>
-            <div className='flex items-center gap-3'>
-                <div className='flex items-center justify-center shrink-0 rounded-full w-10 h-10 bg-blue-300 text-sm'>
+        <div className='comment'>
+            <div className='avatar'>
                     {avatar}
-                </div>
-
-                <div className='text-gray-300 text-[12px]'>
-                    {cmt.comment}
-                </div>
             </div>
 
+            <div className='comment-content'>
+                <div className='comment-author'>
+                    {cmt.author?.username || 'Anonymous'}
+                </div>
+                <div className='comment-text'>
+                    {cmt.comment}
+                </div>
+
             {isAuth && (
-                <div className='flex justify-end gap-3 text-white opacity-50 text-sm'>
+                <div className='comment-actions'>
                     
                     {isOwner && (
                         <button onClick={() => onEdit(cmt)}>
@@ -44,6 +46,7 @@ export const CommentItem = ({ cmt, onEdit, onDelete }) => {
 
                 </div>
             )}
+            </div>
         </div>
     )
 }
