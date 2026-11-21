@@ -1,24 +1,38 @@
 import Post from '../models/Post.js'
 import User from '../models/User.js'
-import path, { dirname } from 'path'
-import { fileURLToPath } from 'url'
 import Comment from '../models/Comment.js'
+import { deleteImage, uploadImage } from '../config/cloudinary.js'
+
+const getUploadedImage = (files) => {
+    const image = files?.image
+    return Array.isArray(image) ? image[0] : image
+}
+
+const uploadPostImage = async (file) => {
+    const result = await uploadImage(file)
+    return {
+        url: result.secure_url,
+        publicId: result.public_id,
+    }
+}
+
 // Create Post
 export const createPost = async (req, res) => {
+    let uploadedImage
     try {
         const { title, text } = req.body
         const user = await User.findById(req.userId)
 
-        if (req.files) {
-            let fileName = Date.now().toString() + req.files.image.name
-            const __dirname = dirname(fileURLToPath(import.meta.url))
-            req.files.image.mv(path.join(__dirname, '..', 'uploads', fileName))
+        const image = getUploadedImage(req.files)
+        if (image) {
+            uploadedImage = await uploadPostImage(image)
 
             const newPostWithImage = new Post({
                 username: user.username,
                 title,
                 text,
-                imgUrl: fileName,
+                imgUrl: uploadedImage.url,
+                cloudinaryPublicId: uploadedImage.publicId,
                 author: req.userId,
             })
 
@@ -43,7 +57,9 @@ export const createPost = async (req, res) => {
         })
         res.json(newPostWithoutImage)
     } catch (error) {
-        res.json({ message: 'Something went wrong.' })
+        if (uploadedImage?.publicId) await deleteImage(uploadedImage.publicId).catch(() => {})
+        console.error('Create post error:', error)
+        res.status(500).json({ message: 'Unable to upload image or create post.' })
     }
 }
 
@@ -96,16 +112,19 @@ export const getMyPosts = async (req, res) => {
 
 // Update post
 export const updatePost = async (req, res) => {
+    let uploadedImage
     try {
         const { title, text, id } = req.body
         const post = await Post.findById(id)
 
-        if (req.files && req.files.image) {
-            console.log(req.files)
-            let fileName = Date.now().toString() + req.files.image.name
-            const __dirname = dirname(fileURLToPath(import.meta.url))
-            req.files.image.mv(path.join(__dirname, '..', 'uploads', fileName))
-            post.imgUrl = fileName || ''
+        if (!post) return res.status(404).json({ message: 'Post not found.' })
+
+        const image = getUploadedImage(req.files)
+        const oldPublicId = post.cloudinaryPublicId
+        if (image) {
+            uploadedImage = await uploadPostImage(image)
+            post.imgUrl = uploadedImage.url
+            post.cloudinaryPublicId = uploadedImage.publicId
         }
 
         post.title = title
@@ -113,23 +132,38 @@ export const updatePost = async (req, res) => {
 
         await post.save()
 
+        if (image && oldPublicId && oldPublicId !== uploadedImage.publicId) {
+            await deleteImage(oldPublicId).catch((error) => {
+                console.error('Old Cloudinary image deletion error:', error)
+            })
+        }
+
         res.json(post)
     } catch (error) {
-        res.json({ message: 'Something went wrong' })
+        if (uploadedImage?.publicId) await deleteImage(uploadedImage.publicId).catch(() => {})
+        console.error('Update post error:', error)
+        res.status(500).json({ message: 'Unable to update post.' })
     }
 }
 
 export const removePost = async (req, res) => {
     try {
-        const post = await Post.findByIdAndDelete(req.params.id)
+        const post = await Post.findById(req.params.id)
         if(!post) return res.json({message: "That post does not exists"})
-        
+
+        await Post.findByIdAndDelete(req.params.id)
         
        await User.findByIdAndUpdate(req.userId, {
             $pull: { posts: req.params.id },
         })
 
-        res.json({ message: 'Post has been deleted' })
+        if (post.cloudinaryPublicId) {
+            await deleteImage(post.cloudinaryPublicId).catch((error) => {
+                console.error('Cloudinary image deletion error:', error)
+            })
+        }
+
+        res.json({ message: 'Post has been deleted', _id: post._id })
     } catch (error) {
         res.json({ message: 'Something went wrong' })
     }

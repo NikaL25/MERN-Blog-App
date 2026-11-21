@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { updatePost } from '../redux/features/post/postSlice'
 
 import axios from '../utils/axios'
+import { getImageUrl } from '../utils/imageUrl'
 
 export const EditPostPage = () => {
     const [title, setTitle] = useState('')
@@ -67,7 +68,7 @@ export const EditPostPage = () => {
             <div className='flex object-cover py-2'>
           {oldImage && (
     <img
-        src={`https://mern-blog-app-0lw2.onrender.com/${oldImage}?t=${Date.now()}`}
+        src={`${getImageUrl(oldImage)}?t=${Date.now()}`}
         alt="old"
     />
 )}

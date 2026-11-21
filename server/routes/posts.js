@@ -15,6 +15,10 @@ router.post("/", checkAuth, createPost)
 router.get("/", getAll)
 
 
+// Get My Posts
+// http://localhost:3002/api/posts/user/me
+router.get('/user/me', checkAuth, getMyPosts)
+
 // Get Post By Id
 // http://localhost:3002/api/posts/:id
 router.get('/:id', getById)
@@ -22,10 +26,6 @@ router.get('/:id', getById)
 // Update Post
 // http://localhost:3002/api/posts/:id
 router.put('/:id', checkAuth, updatePost)
-
-// Get My Posts
-// http://localhost:3002/api/posts/user/me
-router.get('/user/me', checkAuth, getMyPosts)
 
 // Remove Post
 // http://localhost:3002/api/posts/user/me

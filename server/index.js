@@ -20,8 +20,14 @@ const DB_NAME = process.env.DB_NAME
 
 // Middleware
 app.use(cors())
-app.use(fileUpload())
+app.use(fileUpload({
+    useTempFiles: false,
+    limits: { fileSize: 10 * 1024 * 1024 },
+    abortOnLimit: true,
+}))
 app.use(express.json())
+// Kept only for backwards compatibility with legacy local file names.
+// New uploads are stored in Cloudinary and never written here.
 app.use(express.static('uploads'))
 
 // Health check route (for browser / Render)

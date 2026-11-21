@@ -21,6 +21,7 @@ import {
 } from '../redux/features/comment/commentSlice'
 import { CommentItem } from '../components/CommentItem'
 import { updateComment, deleteComment } from '../redux/features/comment/commentSlice'
+import { getImageUrl } from '../utils/imageUrl'
 
 export const PostPage = () => {
     const [post, setPost] = useState(null)
@@ -114,10 +115,9 @@ const handleSubmit = () => {
         : 'flex rounded-sm'
     }
   >
-      {/* src={`http://localhost:3002/${post.imgUrl}`} */}
     {post?.imgUrl && (
         <img
-        src={`https://mern-blog-app-0lw2.onrender.com/${post.imgUrl}`}
+        src={getImageUrl(post.imgUrl)}
         alt="img"
         className="object-cover w-full h-full rounded-sm"
         />
