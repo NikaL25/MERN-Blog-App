@@ -3,9 +3,12 @@ import { useEffect } from 'react'
 import { useState } from 'react'
 import { PostItem } from '../components/PostItem'
 import axios from '../utils/axios'
+import { useDispatch } from 'react-redux'
 
 export const PostsPage = () => {
     const [posts, setPosts] = useState([])
+    const dispatch = useDispatch()
+    const currentUsername = useSelector(state => state.auth.user?.username)
 
     const fetchMyPosts = async () => {
         try {
@@ -29,7 +32,7 @@ export const PostsPage = () => {
             </section>
             <div className='post-feed' style={{paddingBottom: '72px'}}>
                 {posts?.map((post, idx) => (
-                    <PostItem post={post} key={idx} />
+                    <PostItem post={post} key={idx} currentUserUsername={currentUsername} />
                 ))}
                 {!posts.length && <div className='empty-state'><h2>Your archive is empty</h2><p>Publish your first story to see it here.</p></div>}
             </div>

@@ -3,10 +3,13 @@ import { PostItem } from '../components/PostItem'
 import PopularPosts from '../components/PopularPosts'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllPosts } from '../redux/features/post/postSlice'
+import { checkIsAuth } from '../redux/features/auth/authSlice'
 
 export const MainPage = () => {
     const dispatch = useDispatch()
     const { posts, popularPosts } = useSelector((state) => state.post)
+    const isAuth = useSelector(checkIsAuth)
+    const currentUsername = useSelector(state => state.auth.user?.username)
 
     useEffect(() => {
         dispatch(getAllPosts())
@@ -31,7 +34,7 @@ export const MainPage = () => {
             <div className='feed-layout'>
                 <div className='post-feed'>
                     {posts?.map((post, idx) => (
-                        <PostItem key={idx} post={post} />
+                        <PostItem key={idx} post={post} currentUserUsername={currentUsername} />
                     ))}
                 </div>
 
